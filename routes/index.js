@@ -1,8 +1,12 @@
 const express = require ('express');
-const allRoutes = express.Router();
-
+const allroute = express.Router();
+var authRouter =require('./user.auth.routes');
+const userRouter = require('./user.crud');
+const smsRoute = require('./user.sms.route');
 const citizenRoutes = require('./citizen.routes');
 
-allRoutes.use('/citizen' , citizenRoutes);
-
-module.exports = allRoutes;
+allroute.use('/citizen' , citizenRoutes);
+allroute.use('/user/auth',authRouter);
+allroute.use('/user/crud',userRouter);
+allroute.use('/user/sms',smsRoute);
+module.exports = allroute;
