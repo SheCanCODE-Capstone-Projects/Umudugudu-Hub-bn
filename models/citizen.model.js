@@ -4,6 +4,7 @@ const CitizenSchema = new mongoose.Schema({
     fullNames:{ 
         required: true, 
         type: String    },
+    
     dateOfBirth: {
         type: Date,
         required: true,

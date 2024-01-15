@@ -47,7 +47,42 @@ const create = async (req, res, next) => {
         }
     }
 
+    const findById = async(req, res, next) => {
+        try{
+            let citizenId = req.query.id;
+            var foundCitizen = await CitizenModel.findById({_id:citizenId});
+            res.status(200).json({
+                citizen :foundCitizen
+            });
+        }catch (error) {
+            res.status(500).send(error);
+        }
+    };
 
+    const findByNationalId = async(req, res, next) => {
+        try{
+            let citizenId = req.body.nationalId;
+            var foundCitizen = await CitizenModel.findOne({nationalId:citizenId});
+            res.status(200).json({
+                citizen :foundCitizen
+            });
+        }catch (error) {
+            res.status(500).send(error);
+        }
+    }
+
+    const remove = async (req, res, next) =>{
+        try{
+            var deletedCitizen = await CitizenModel.findByIdAndDelete(req.query.id);
+            if(deletedCitizen){
+                res.status(200).json({message: "Deleted!" });
+            }else {
+                res.status(400).json({message: "Citizen not found!"});
+            }
+        }catch(error){
+            res.status(500).send(error);
+        }
+    }
     module.exports = {
-        create,update,list,findByFullName
+        create,update,list,findByFullName,findById, findByNationalId, remove
     }
