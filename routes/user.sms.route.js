@@ -1,11 +1,12 @@
 var express = require('express');
-const { sendToAll, viewAll } = require('../controllers/user.sms.controller');
+const { viewAll, SendMessage } = require('../controllers/user.sms.controller');
 
 var smsRoute = express.Router();
 
 
-smsRoute.get('/announcement', sendToAll);
-smsRoute.get('/viewAll', viewAll)
+smsRoute.post('/announcement',SendMessage);
+smsRoute.get('/viewAll', viewAll);
+
 
 
 module.exports = smsRoute;

@@ -15,7 +15,15 @@ const UserSigninSchema = joi.object({
 
 });
 
+const citizen=joi.object({
+    nationalId: joi.string().regex(/^[0-9]{16}$/).required(),
+    phoneNumber:joi.string().regex(/^\+250\d{9}$/).messages({'string.pattern.base': `Phone number must have 12 digits.`}).required(),
+    email:joi.string().email().lowercase().required(),
+
+})
+
 module.exports ={ 
     UserValSchema,
-    UserSigninSchema
+    UserSigninSchema,
+    citizen
 }

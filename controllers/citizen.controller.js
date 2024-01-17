@@ -1,13 +1,18 @@
+const { citizen } = require('../middlewares/user.validation');
 const CitizenModel = require('../models/citizen.model');
 
 const create = async (req, res, next) => {
     try{
+        const {email,password,nationalId} = req.body;
+
+        const result= await citizen.validateAsync({nationalId:req.body.nationalId,phoneNumber:req.body.phoneNumber,email:req.body.email});
+        
         const addedCitizen = await CitizenModel.create(req.body);
 
         console.log(addedCitizen);
         res.status(201).json({
             message: "Citizen added successfully",
-            addedCitizen
+            addedCitizen 
         })
     }
         catch (error){

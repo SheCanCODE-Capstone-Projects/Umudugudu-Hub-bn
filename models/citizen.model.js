@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 const CitizenSchema = new mongoose.Schema({
-indivInfo:{
+
     fullNames:{ 
         required: true, 
         type: String    },
@@ -19,8 +19,11 @@ indivInfo:{
     phone:{
         type: String,
         required: true,
-    }
-},
+    },
+    email:{
+        type: String,
+        required: true,
+    },
 
     demoInfo:{
     gender:{
@@ -92,16 +95,16 @@ indivInfo:{
         }
     },
 
-    houseComp:{
+    
         numberOfChildren:{
             type:Number,
             required:true
-    },
+        },
         numberOfHousePeople:{
         type:Number,
         required:true
-    }
-}
+        }
+    
 });
 
 module.exports = mongoose.model('citizen',CitizenSchema)
