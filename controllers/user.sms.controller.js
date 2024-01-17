@@ -1,22 +1,24 @@
-const sendSms = require("../middlewares/sendSMS");
+const sendEmail = require("../middlewares/sendEmail");
+// const sendSms = require("../middlewares/sendSMS");
 const userModel = require("../models/user.model");
 
 
 const sendToAll= async (req, res) => {
+    const title=req.body.title;
     const text =req.body.message;
-    const allNbr = [];
+    const allEmail = [];
     var toRecieve = await userModel.find({});
     console.log(toRecieve);
     for (let i = 0; i < toRecieve.length; i++){
 
-        allNbr.push(toRecieve[i].phoneNumber);
+        allEmail.push(toRecieve[i].email);
 
     }
-    console.log(allNbr);
+    console.log(allEmail);
      
-    for (const nbr of allNbr) {
+    for (const email of allEmail) {
 
-        sendSms(nbr,text);
+        sendEmail(email,title,text)
         
     }
     

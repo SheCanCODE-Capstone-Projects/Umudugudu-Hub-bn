@@ -29,7 +29,7 @@ const addUser = async (req,res,next)=>{
         
         
     } catch (error) {
-        res.status(500).send(error.message);  
+        res.status(500).send({message:"Error adding user try again",error:error.message})  
     }
 
 
@@ -47,7 +47,7 @@ const deleteUser = async (req,res,next)=>{
         }
         
     } catch (error) {
-        res.status(500).send(error.message)
+        res.status(500).send({message:"Error deleting user try again",error:error.message})
     }
 };
 const listAll = async (req,res,next)=>{
@@ -57,7 +57,7 @@ const listAll = async (req,res,next)=>{
         res.status(200).send({allUser:allUser,total:total, message:"all users" }) ;
         
     } catch (error) {
-        res.status(500).send(error.message)
+        res.status(500).send({message:"Error getting all users try again",error:error.message})
     }
 
 };
@@ -68,9 +68,24 @@ const updateUser = async (req,res,next)=>{
         console.log(toUpdate);
         res.status(200).send({message:"User updated successfully"});
     } catch (error) {
-        res.status(500).send(error.message)
+        res.status(500).send({message:"Failed to update try again",error:error.message})
     }
 };
+
+const findByNationalId= async (req,res,next) => {
+    try {
+        var nationalId= req.body.nationalId;
+        var foundUser= await UserModel.findOneAndUpdate({nationalId:nationalId});
+        if (!foundUser){
+            res.status(404).send({message:"User not found"});
+        }
+
+        
+    } catch (error) {
+        res.status(500).send({message:"Search unsuccessful try again",error:error.message})
+    }
+
+}
 
 
 
@@ -79,4 +94,5 @@ module.exports = {
     deleteUser,
     listAll,
     updateUser,
+    findByNationalId
 };
