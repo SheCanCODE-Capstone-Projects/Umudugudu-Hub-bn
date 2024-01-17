@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 
 const CitizenSchema = new mongoose.Schema({
+indivInfo:{
     fullNames:{ 
         required: true, 
         type: String    },
@@ -11,7 +12,17 @@ const CitizenSchema = new mongoose.Schema({
         trim: true,
     },
     placeOfBirth:{ required: true, type: String},
+    nationalId:{
+        type: String,
+        required: true,
+    },
+    phone:{
+        type: String,
+        required: true,
+    }
+},
 
+    demoInfo:{
     gender:{
         type:String,
         required: true,
@@ -27,9 +38,10 @@ const CitizenSchema = new mongoose.Schema({
             values: ['Single','Married','Divorced','Widowed'] , 
             message:"{value} please provide valid marital status",  //
          }
-    },
+    }
+},
     resInfo:{
-        address: {
+        isibo: {
             required:true, 
             type: String
         },
@@ -75,7 +87,7 @@ const CitizenSchema = new mongoose.Schema({
         type:String,
         required:true,
         enum:{
-            values:["water","Electricity","Sanitation"],
+            values:["Water","Electricity","Sanitation"],
             message:"{VALUE} please provide a valid Amenity",
         }
     },
