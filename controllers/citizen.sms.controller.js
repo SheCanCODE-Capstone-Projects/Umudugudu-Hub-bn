@@ -1,14 +1,10 @@
 const sendEmail = require("../middlewares/sendEmail");
 const MessageModel = require("../models/message.model");
-// const sendSms = require("../middlewares/sendSMS");
-const userModel = require("../models/user.model");
-
-
-
-const SendMessage= async(req,res,next)=>{
+const CitizenSchema = require("../models/citizen.model");
+const SendSms= async(req,res,next)=>{
     try {
         const toSave = new MessageModel({
-            to: "Users",
+            to: "Citizens",
             title: req.body.title,
             text:req.body.message
         });
@@ -18,7 +14,7 @@ const SendMessage= async(req,res,next)=>{
         const text = req.body.message;
     
         const allEmail = [];
-        var toRecieve = await userModel.find({});
+        var toRecieve = await CitizenSchema.find({});
         console.log(toRecieve);
         for (let i = 0; i < toRecieve.length; i++) {
     
@@ -32,7 +28,7 @@ const SendMessage= async(req,res,next)=>{
             sendEmail(email, title, text)
     
         };
-        res.status(200).send({ message: "Message  sent to the users" });
+        res.status(200).send({ message: "Message  sent to the citizens" });
         
     } catch (error) {
         res.status(500).send({message:"Error saving message",error:error.message})
@@ -40,9 +36,9 @@ const SendMessage= async(req,res,next)=>{
 
 };
 
-const viewAll = async (req, res, next) => {
+const seeAll = async (req, res, next) => {
     try {
-        const allMessages = await MessageModel.find({ to: "Users" });
+        const allMessages = await MessageModel.find({ to: "Citizens" });
         res.status(200).send(allMessages);
 
     } catch (error) {
@@ -51,4 +47,4 @@ const viewAll = async (req, res, next) => {
 
 }
 
-module.exports = { SendMessage, viewAll }
+module.exports = { seeAll,SendSms }

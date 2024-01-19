@@ -66,7 +66,6 @@ const UserModel = new Schema({
             required:true,
         },
         
-        
     },
     maritalStatus:{
         type:String,
