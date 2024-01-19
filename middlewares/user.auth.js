@@ -1,7 +1,7 @@
 const UserModel = require('../models/user.model');
 var bcrypt = require('bcryptjs');
 const sendEmail = require('./sendEmail');
-const { UserValSchema } = require('./user.validation');
+const { UserValSchema, resetPasswordSchema } = require('./user.validation');
 const jwt = require("jsonwebtoken");
 const userModel = require('../models/user.model');
 const SignUp = async (req, res, next) => {
@@ -105,7 +105,21 @@ const logout = (req, res, next) => {
     res.redirect('/login')
 };
 
-
+const updatePassword = async (req, res, next) => {
+    try {
+        var result = await resetPasswordSchema.validateAsync(req.body);
+        var validemail = await UserModel.findOne({email:req.body.email});
+        if (validemail) {
+            var updatePasswrd = await UserModel.findOneAndUpdate({email:req.body.email});
+            res.status(200).send("successfully saved");
+        } else {
+            res.status(400).send("user does not exist!");
+        }
+        
+    } catch (error) {
+        res.status(500).json({message:"failed to change password, please try again", error: error.message});
+    }
+}
 
 
 
@@ -114,6 +128,8 @@ module.exports = {
     SignUp,
     login,
     logout,
-    forgotPassword
+    forgotPassword,
+    updatePassword
+
 
 };
