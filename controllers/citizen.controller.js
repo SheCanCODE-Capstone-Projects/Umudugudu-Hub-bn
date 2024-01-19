@@ -5,7 +5,7 @@ const create = async (req, res, next) => {
     try{
         const {email,password,nationalId} = req.body;
 
-        const result= await citizen.validateAsync({nationalId:req.body.nationalId,phoneNumber:req.body.phoneNumber,email:req.body.email});
+        const result= await citizen.validateAsync({nationalId:req.body.nationalId,phone:req.body.phone,email:req.body.email});
         
         const addedCitizen = await CitizenModel.create(req.body);
 
