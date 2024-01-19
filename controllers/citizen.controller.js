@@ -7,13 +7,22 @@ const create = async (req, res, next) => {
 
         const result= await citizen.validateAsync({nationalId:req.body.nationalId,phone:req.body.phone,email:req.body.email});
         
-        const addedCitizen = await CitizenModel.create(req.body);
+        var alreadyExists = await CitizenModel.findOne({'nationalId':req.body.nationalId} );
+        console.log(req.body.nationalId);
+        if (!alreadyExists) {
 
-        console.log(addedCitizen);
-        res.status(201).json({
-            message: "Citizen added successfully",
-            addedCitizen 
-        })
+            const addedCitizen = await CitizenModel.create(req.body);
+
+            console.log(addedCitizen);
+            res.status(201).json({
+                message: "Citizen added successfully",
+                addedCitizen
+            });
+
+        } else {
+            res.status(401).send({ message: "This Citizen already exists", error: console.error.message })
+
+        }
     }
         catch (error){
             res.status(500).send(error.message);

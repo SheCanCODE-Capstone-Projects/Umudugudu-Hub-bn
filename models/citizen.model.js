@@ -15,6 +15,7 @@ const CitizenSchema = new mongoose.Schema({
     nationalId:{
         type: String,
         required: true,
+        unique: true,
     },
     phone:{
         type: String,
@@ -24,6 +25,7 @@ const CitizenSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
+
 
     demoInfo:{
     gender:{
@@ -95,16 +97,16 @@ const CitizenSchema = new mongoose.Schema({
         }
     },
 
-    
+    houseComp:{
         numberOfChildren:{
             type:Number,
             required:true
-        },
+    },
         numberOfHousePeople:{
         type:Number,
         required:true
-        }
-    
+    }
+}
 });
 
 module.exports = mongoose.model('citizen',CitizenSchema)
