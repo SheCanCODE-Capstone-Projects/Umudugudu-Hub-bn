@@ -68,7 +68,7 @@ const login = async (req, res, next) => {
         res
             .cookie('access_token', token, { httpOnly: true })
             .status(200)
-            .json(rest);
+            .json({user:rest,token:token,message:"The User loged in successfully!!"});
 
     } catch (error) {
         res.status(500).json({ message: "Error try again", error: error.message });
